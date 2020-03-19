@@ -1,0 +1,69 @@
+.cabecera {
+	height: 10%;
+	width: 98%;
+	margin: 1% 1%;
+	/*background-color: lightblue;*/
+}
+
+.contenedor1 {
+	width: 48%;
+	height: 99%;
+	margin: 0% 1%;
+	float: left;
+	/*background-color: yellow;*/
+}
+
+.contenedor2 {
+	width: 48%;
+	height: 99%;
+	margin: 0% 1%;
+	float: right;
+	/*background-color: purple;*/
+}
+
+.table{
+	width: 98%;
+	text-align: center;
+}
+
+.myCanvas  {
+	width: 80%;
+	height: 100%;
+	cursor:crosshair;
+	border: 1px solid #000000;
+	padding-left: 0;
+	padding-right: 0;
+	display: block;
+}
+
+
+
+.divSave{
+	width: 40%;
+	float: left;
+	/*background-color: red;*/
+}
+
+.divDeleteButton{
+	width: 40%;
+	float: right;
+	/*background-color: #ADFF2F;*/
+}
+
+.btn-warning{
+	background-color: #a0f54b;
+	border: #b5f39a 1px solid;
+}
+
+.btn-success{
+	background-color: #f05c90;
+	border: #f05c90 1px solid;
+}
+
+#newBlue{
+	width:30%;
+}
+
+
+
+
