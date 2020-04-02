@@ -16,25 +16,40 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/webjars/jquery/jquery.min.js"></script>
-        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-        <script src="/app.js"></script>
 
-    </head>
-
-
+<head>
+    <title>TODO supply a title</title>
+    <title>Blueprints</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
     
-    <body onload="app.mouseEvent()">
-        Identificador de dibujo: <input id="id_dibujo" type="number"/>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/4.1.2/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+
+<body onload="app.mouseEvent()">
+    <div class="form-group">
+        Identificador de dibujo: <input id="id_dibujo" type="number" class="form-control" />
         <button class="submit" onclick="app.init()">Conectarse</button><br><br>
-        X:<input id="x" type="number"/>
-        Y:<input id="y" type="number"/>        
+        X:<input id="x" type="number" />
+        Y:<input id="y" type="number" />
         <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
-        <canvas id="canvas" width="800" height="600"></canvas>
-    </body>
+        <br/>
+        <canvas id="canvas" width="800" height="600" style="border:1px solid #008000;"></canvas>
+    </div>
+</body>
+
 </html>
