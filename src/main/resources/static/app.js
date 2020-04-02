@@ -27,6 +27,13 @@ var app = (function () {
         };
     };
 
+    var clearCanvas=function(){
+       var canvas=document.getElementById("canvas");
+       var context=canvas.getContext("2d");
+       context.clearRect(0, 0, canvas.width, canvas.height);
+       context.beginPath();
+
+    }
 
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
@@ -40,16 +47,19 @@ var app = (function () {
             stompClient.subscribe('/topic/newpoint.'+id, function (eventbody) {
                 var theObject = JSON.parse(eventbody.body);
                 var punto = new Point(theObject.x, theObject.y);
-                var canvas = document.getElementById("canvas");
+                addPointToCanvas(punto);
+                /*var canvas = document.getElementById("canvas");
                 var ctx = canvas.getContext("2d");
                 ctx.beginPath();
                 ctx.arc(punto.x, punto.y, 3, 0, 2 * Math.PI);
-                ctx.stroke();
+                ctx.stroke();*/
             });
             stompClient.subscribe('/topic/newpolygon.'+id, function (eventbody) {
-                var anterior = null;
+                //var anterior = null;
                 var theObject = JSON.parse(eventbody.body);
-                var c2 = canvas.getContext('2d');
+                createFigure(theObject);
+
+                /*var c2 = canvas.getContext('2d');
 
                 c2.fillStyle = '#00ff0b';
                 c2.beginPath();
@@ -65,10 +75,41 @@ var app = (function () {
                 });
 
                 c2.closePath();
-                c2.fill();
-            })
+                c2.fill();*/
+            });
         });
-        app.disconnect();
+        //app.disconnect();
+    };
+
+   
+
+    var createFigure=function(theObject){
+        var canvas=document.getElementById("canvas");
+        var c2 = canvas.getContext('2d');
+
+        c2.fillStyle = '#00ff0b';
+        c2.beginPath();
+        c2.moveTo(theObject[0].x, theObject[0].y);
+
+        var ant = 1;
+
+        theObject.filter((point, index)=>{
+            return index>0
+        }).map(function(point){
+            if(ant==4){
+                ant=0;
+                c2.moveTo(point.x, point.y);
+            }
+            else{
+                c2.lineTo(point.x, point.y);
+            }
+            ant++;
+            c2.stroke();
+        });
+        c2.closePath();
+        c2.fill();
+
+
     };
 
 
@@ -76,14 +117,16 @@ var app = (function () {
     var flag = false;
     return {
         init: function () {
-
-            var can = document.getElementById("canvas");
+            app.disconnect();
+            clearCanvas();
+            //var can = document.getElementById("canvas");
             //_funcListener();
-            var c2 = canvas.getContext('2d');
-            c2.clearRect(0, 0, 800, 600);
-            id = $("#i_dibujo").val();
-            if (id != null ){
-                if(flag == true){
+            //var c2 = canvas.getContext('2d');
+           // c2.clearRect(0, 0, 800, 600);
+            id = $("#id_dibujo").val();
+            if (id){
+                connectAndSubscribe();
+                /*if(flag == true){
                     flag = true;
                     can.removeEventListener("click",fun)
                 }
@@ -91,16 +134,23 @@ var app = (function () {
                     var mousePos = getMousePosition(evt);
                     app.publishPoint(mousePos.x, mousePos.y);
                 });
-                flag = true;
+                flag = true;*/
 
             };
             //websocket connection
             connectAndSubscribe();
 
         },
+        mouseEvent: function () {
+            var can = document.getElementById("canvas");
+            can.addEventListener("pointerdown", function (evt) {
+                var clickPosition = getMousePosition(evt);
+                app.publishPoint(clickPosition.x, clickPosition.y);
+            });
+        },
 
-        publishPoint: function(px,py){
-            var pt=new Point(px,py);
+        publishPoint: function (px, py) {
+            var pt =new Point(px,py);
             console.info("publishing point at "+pt);
             //addPointToCanvas(pt);
 
@@ -113,7 +163,7 @@ var app = (function () {
             if (stompClient !== null) {
                 stompClient.disconnect();
             }
-            setConnected(false);
+            //setConnected(false);
             console.log("Disconnected");
         }
     };
