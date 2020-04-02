@@ -3,6 +3,7 @@
 ## Autores:
 
 Natalia Durán
+
 Miguel Rivera
 
 ## Broker de mensajes STOMP
